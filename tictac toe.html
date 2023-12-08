@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div id="board" class="board">
+            <div class="cell" onclick="handleClick(0)"></div>
+              <div class="cell" onclick="handleClick(1)"></div>
+               <div class="cell" onclick="handleClick(2)"></div>
+             <div class="cell" onclick="handleClick(3)"></div>
+              <div class="cell" onclick="handleClick(4)"></div>
+              <div class="cell" onclick="handleClick(5)"></div>
+              <div class="cell" onclick="handleClick(6)"></div>
+             <div class="cell" onclick="handleClick(7)"></div>
+             <div class="cell" onclick="handleClick(8)"></div> </div>
+<p id="result" class="result"></p>
+ <button onclick="resetGame()">Reset Game</button>
+</div>
+</body>
+</html>
+<script>
+let currentPlayer = 'X';
+let gameBoard = ['', '', '', '', '', '', '', '', ''];
+let gameActive = true;
+
+const winPatterns = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
+
+const board = document.getElementById('board');
+const resultDisplay = document.getElementById('result');
+
+function handleClick(index) {
+    if (gameBoard[index] === '' && gameActive) {
+        gameBoard[index] = currentPlayer;
+        updateBoard();
+        checkWinner();
+        togglePlayer();
+    }
+}
+
+function updateBoard() {
+    gameBoard.forEach((value, index) => {
+    const cell = document.getElementsByClassName('cell')[index];
+     cell.textContent = value;
+    });
+}
+
+function togglePlayer() {
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+}
+
+function checkWinner() {
+    for (let pattern of winPatterns) {
+          const [a, b, c] = pattern;
+        if (gameBoard[a] !== '' && gameBoard[a] === gameBoard[b] && gameBoard[b] === gameBoard[c]) {
+        gameActive = false;
+        resultDisplay.textContent = `Player ${gameBoard[a]} wins!`;
+        }
+    }
+
+    if (!gameBoard.includes('') && gameActive) {
+    gameActive = false;
+     resultDisplay.textContent = "It's a draw!";
+    }
+}
+
+function resetGame() {
+      currentPlayer = 'X';
+     gameBoard = ['', '', '', '', '', '', '', '', ''];
+    gameActive = true;
+    resultDisplay.textContent = '';
+    updateBoard();
+}
+
+</script>
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f7f7f7;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 5px;
+  margin-top: 20px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(210, 136, 147);
+    border: 1px solid rgb(203, 157, 186) ;
+     display: flex;
+      justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+   transition: background-color 0.3s;
+}
+
+.cell:hover {
+  background-color: rgb(197, 162, 190);
+}
+.result {
+    margin-top: 20px;
+     color: #333;
+  font-size: 18px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #008CBA;
+  
+    color: white;
+    border: none;
+     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #00506b;
+}
+
+</style>
