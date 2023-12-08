@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="search" placeholder="Search.." spellcheck="false">
+            <button class="searchbtn">SEARCH</button>
+
+            <h1 class="temp" style="margin-left: 150px; margin-top: 50px;" >22°C</h1>
+            <h2 class="city" style="margin-left: 150px; ">Chennai</h2>
+            <br>
+
+            <h3 style="  margin-left:60px; margin-top: 60px;">HUMIDITY  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WIND SPEED</h3>
+            <div class="details">
+               
+                <div class="col">
+                    <img src="C:\Users\91786\Downloads\weather-app-img\images\humidity.png"style="height: 50px; margin-left:40px; margin-top:  65px;">
+                   
+                     <h3 class="humi" style="margin-left:30px;margin-top: 70px;">&nbsp;50%</h3>
+                  
+                </div>
+
+                
+                <div class="col">
+                    <img src="C:\Users\91786\Downloads\weather-app-img\images\wind.png" style="height: 50px; margin-left:80px; margin-top:  65px;">
+                   
+                     <h3 class="wind" style="margin-top:70px;">&nbsp;50%</h3>
+               
+                     
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
+<script>
+
+
+const apiKey = "df1f9cdba6d6fb765faeb2a9113f355b";
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+
+
+
+const searchBox=document.querySelector(".search input");
+const searchbtn=document.querySelector(".search button");
+
+
+async function checkWeather(city) {
+    const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+
+    var data = await response.json();
+    console.log(data);
+
+
+  document.querySelector(".city").innerHTML=data.name;
+  document.querySelector(".temp").innerHTML=Math.round(data.main.temp)+"°c";
+  document.querySelector(".humi").innerHTML=data.main.humidity+"%";
+  document.querySelector(".wind").innerHTML=data.wind.speed+"km/hr";
+
+ 
+}
+searchbtn.addEventListener("click", () => {
+    console.log("Button clicked"); 
+    checkWeather(searchBox.value);
+});
+
+</script>
+
+<style>
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card{
+    background-image: url('C:/Users/91786/Downloads/WEATHER BACKGROUND.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+        width: 30%;
+        height: 600px;
+        padding: 10px;
+        display: flex;
+        margin-top: 20px;
+        margin-left: 570px;
+        border-radius: 40px;
+    }
+    
+ input{
+     margin-left: 60px;
+     margin-top: 40px;
+     border: none;
+     padding: 7px;
+     width: 250px;
+     border-radius: 40px;
+ }   
+ image{
+    height: 5px;
+ }
+.searchbtn{
+    border: none;
+    border-radius: 40px;
+    background-color:whitesmoke;
+    padding: 7px;
+
+}
+.card image{
+    object-fit: cover;
+}
+.searchbtn:hover{
+    border: none;
+    border-radius: 40px;
+    background-color:rgb(48, 178, 190);
+    padding: 7px;
+
+}
+h3{
+    
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+   
+  
+    
+}
+h1{
+    font-size: 60px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+}
+h2{
+    font-size: 30px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+}
+.col{
+    display: flex;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.details{
+    display: flex;
+}
+</style>
